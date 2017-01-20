@@ -1,0 +1,18 @@
+version: "2"
+services:
+  tasker0:
+    image: tutum/hello-world
+    ports:
+     - 80
+  tasker1:
+    image: dockercloud/hello-world
+    ports:
+     - 80
+  tasker2:
+    image: tutum/hello-world
+    ports:
+     - 8040:80
+  tasker3:
+    image: dockercloud/hello-world
+    ports:
+     - 8070:80
