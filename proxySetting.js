@@ -3,17 +3,14 @@ var writeNameId = require('./writeNameId');
 const Docker = require('dockerode');
 const docker = new Docker({socketPath: '/var/run/docker.sock'});
 
-var port='';
-var publishingIP='';
-var dName='';
-var proxy= function(repoPath,serviceName,callback){ 
-	 var dabFile = repoPath.split("/");
-	 dabFile=dabFile[dabFile.length-1];
-
- 	 var service = docker.getService(dabFile+'_'+serviceName)
+var proxy= function(stackName, serviceName, callback) { 
+		let serviceNameToExpose = stackName + '_' + serviceName;
+ 	 var service = docker.getService(serviceNameToExpose);
 	 service.inspect(function (err, data) {
 	 	if(err){console.error("fetching port pailed-",err);return;}
-	 	else{ console.log(data);
+	 	else{ 
+	 		console.log(data.Endpoint.Ports[0].PublishedPort);
+
 	 // port= JSON.stringify(data.Endpoint.Ports[0].PublishedPort);
 	 // publishingIP='http://127.0.0.1:'+port;
 	 // dName=domainName;
@@ -22,8 +19,8 @@ var proxy= function(repoPath,serviceName,callback){
 	}
 	});
 	 //console.log("passed dName",+dname);
-	 console.log("publishd ip",publishingIP);
-	 callback(null, publishingIP);
+	 // console.log("publishd ip",publishingIP);
+	 // callback(null, publishingIP);
 
 	//reverse(domainName, 'http://127.0.0.1:' +port); 
 

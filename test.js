@@ -1,4 +1,3 @@
-
 const async = require('async');
 const reverse = require('./rev');
 const writeNameId = require('./writeNameId');
@@ -7,12 +6,12 @@ const docker = new Docker({socketPath: '/var/run/docker.sock'});
 const readFile=require('./readRedis');
 const proxy=require('./proxySetting');
 const domainName='tasker';
-const repoPath='tmp/proxy1';
-const serviceName='tasker0';
+const stackName='cloud';
+const serviceName='dockercloud';
 
 
 async.waterfall([
-	proxy.bind(null,repoPath,serviceName),
+	proxy.bind(null,stackName, serviceName),
 	writeNameId.bind(null,domainName),
 	readFile.bind(null),
 	reverse.bind(null)
